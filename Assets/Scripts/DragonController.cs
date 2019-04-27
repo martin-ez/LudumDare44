@@ -15,14 +15,20 @@ public class DragonController : MonoBehaviour
 
     public float maxPersonalGravityScale = 1.0f;
     public float minPersonalGravityScale = 0.25f;
-    public float currentPersonalGravityScale = 1.0f;
+    private float currentPersonalGravityScale = 1.0f;
     private float currentPersonalGravityLerp = 0.0f;
 
-    public bool onGround = false;
+    private bool onGround = false;
+    private bool wasOnGroundLastFixedUpdate = false;
     public LayerMask groundLayers;
 
     public float airTimeMax = 5.0f;
     private float airTime;
+    public float airTimeCooldown = 2.5f;
+    private float airTimeCooldownTimer;
+
+    public float groundToAirControlPause = 0.5f;
+    private float groundToAirControlTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -47,11 +53,23 @@ public class DragonController : MonoBehaviour
     {       
         if (onGround)
         {
+            if (wasOnGroundLastFixedUpdate == false && airTime < airTimeMax)
+            {
+                airTimeCooldownTimer += airTimeCooldown;
+            }
+            else
+            {
+                airTimeCooldownTimer += Time.fixedDeltaTime;
+            }
+
+            groundToAirControlTimer = 0f;
             airTime = 0f;
             rb.gravityScale = 1f;
-            if (input.y > 0f)
+
+            if (input.y > 0f && airTimeCooldown < airTimeCooldownTimer)
             {
                 rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                onGround = false;
             }
 
             if (input.x == 0f)
@@ -66,23 +84,34 @@ public class DragonController : MonoBehaviour
         }
         else
         {
-            airTime += Time.fixedDeltaTime;
-            if (airTime > airTimeMax)
+            airTimeCooldownTimer = 0;
+            if (groundToAirControlTimer > groundToAirControlPause)
             {
-                rb.gravityScale = 1f;
-                return;
-            }
-            rb.gravityScale = 0f;
-            if (input == Vector2.zero)
-            {
-                rb.AddForce(rb.velocity * -slowdownMultiplier, ForceMode2D.Force);
+                airTime += Time.fixedDeltaTime;
+                if (airTime > airTimeMax)
+                {
+                    rb.gravityScale = 1f;
+                    return;
+                }
+                rb.gravityScale = 0f;
+                if (input == Vector2.zero)
+                {
+                    rb.AddForce(rb.velocity * -slowdownMultiplier, ForceMode2D.Force);
+                }
+                else
+                {
+                    rb.AddForce(input.normalized * speed, ForceMode2D.Force);
+                }
             }
             else
             {
-                rb.AddForce(input.normalized * speed, ForceMode2D.Force);
+                groundToAirControlTimer += Time.fixedDeltaTime;
             }
+            
         }
 
         rb.velocity = Vector2.ClampMagnitude(rb.velocity, maxPhysicsSpeed);
+
+        wasOnGroundLastFixedUpdate = onGround;
     }
 }
