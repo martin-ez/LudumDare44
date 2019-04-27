@@ -79,7 +79,6 @@ public class DragonController : MonoBehaviour
             else
             {
                 rb.AddForce(new Vector2(input.x * speed, 0f), ForceMode2D.Force);
-                Debug.Log(rb.velocity.x * speed);
             }
         }
         else
@@ -88,12 +87,13 @@ public class DragonController : MonoBehaviour
             if (groundToAirControlTimer > groundToAirControlPause)
             {
                 airTime += Time.fixedDeltaTime;
+                rb.gravityScale = 0f;
                 if (airTime > airTimeMax)
                 {
                     rb.gravityScale = 1f;
-                    return;
+                    input.y = 0f;
+                    //return;
                 }
-                rb.gravityScale = 0f;
                 if (input == Vector2.zero)
                 {
                     rb.AddForce(rb.velocity * -slowdownMultiplier, ForceMode2D.Force);
