@@ -26,6 +26,9 @@ public class FlappyDragonController : MonoBehaviour
     [HideInInspector]
     public float AnimatorSpeed = 0.5f;
 
+    public float flapCooldown = 0.5f;
+    private float flapCooldownTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +36,8 @@ public class FlappyDragonController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator.Play(GetAnimationDirect(animator, 1));
         animator.Speed = AnimatorSpeed;
+
+        flapCooldownTimer = flapCooldown;
     }
 
     // Update is called once per frame
@@ -40,9 +45,10 @@ public class FlappyDragonController : MonoBehaviour
     {
         if (isDead == false)
         {
-            if (Input.GetButtonDown("Flap"))
+            if (Input.GetButtonDown("Flap") && flapCooldownTimer >= flapCooldown)
             {
                 //SwitchAnimation(1);
+                flapCooldownTimer = 0;
 
                 //EditorApplication.isPaused = true;
                 animator.Play(GetAnimationDirect(animator, 0));
@@ -50,8 +56,9 @@ public class FlappyDragonController : MonoBehaviour
                 rb.velocity = Vector2.zero;
                 rb.AddForce(new Vector2(0, upForce));
             }
-        }
 
+            flapCooldownTimer += Time.deltaTime;
+        }
     }
 
     private void AnimatorOnAnimationFinished(string obj)
