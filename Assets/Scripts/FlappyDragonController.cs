@@ -27,7 +27,24 @@ public class FlappyDragonController : MonoBehaviour
     public float AnimatorSpeed = 0.5f;
 
     public float flapCooldown = 0.5f;
-    private float flapCooldownTimer;
+    public float flapCooldownTimer;
+
+    private float horizontal;
+    public float horizontalSpeed = 100f;
+
+    public int maxFlaps = 3;
+    public int currentFlaps;
+
+    public bool onGround = false;
+    public LayerMask groundLayers;
+
+    public BoxCollider2D col;
+
+    public float flapRegen = 1f;
+    public float flapRegenTimer;
+    public float flapRegenDelay = 1f;
+    public float flapRegenDelayTimer;
+    public bool flapRegenDelayed = false;
 
     // Start is called before the first frame update
     void Start()
@@ -38,14 +55,24 @@ public class FlappyDragonController : MonoBehaviour
         animator.Speed = AnimatorSpeed;
 
         flapCooldownTimer = flapCooldown;
-    }
 
+        col = GetComponent<BoxCollider2D>();
+    }
+    private void OnDrawGizmos()
+    {        
+        Gizmos.color = new Color(0, 1, 0, 0.5f);
+        //Gizmos.DrawCube(new Vector2(transform.position.x + col.offset.x, transform.position.y + col.offset.y - col.size.y * 0.5f - 0.005f), new Vector2(transform.position.x + col.size.x, transform.position.y + 0.01f));
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(new Vector2(transform.position.x + col.offset.x - col.size.x * 0.5f, transform.position.y + col.offset.y - col.size.y * 0.5f), new Vector2(transform.position.x + col.offset.x + col.size.x * 0.5f, transform.position.y + col.offset.y - col.size.y * 0.5f - 0.001f));
+    }
     // Update is called once per frame
     void Update()
     {
         if (isDead == false)
         {
-            if (Input.GetButtonDown("Flap") && flapCooldownTimer >= flapCooldown)
+            onGround = Physics2D.OverlapArea(new Vector2(transform.position.x + col.offset.x - col.size.x * 0.5f, transform.position.y + col.offset.y - col.size.y * 0.5f), new Vector2(transform.position.x + col.offset.x + col.size.x * 0.5f, transform.position.y + col.offset.y - col.size.y * 0.5f - 0.001f), groundLayers);
+
+            if (Input.GetButtonDown("Flap") && flapCooldownTimer >= flapCooldown && currentFlaps < maxFlaps)
             {
                 //SwitchAnimation(1);
                 flapCooldownTimer = 0;
@@ -53,11 +80,45 @@ public class FlappyDragonController : MonoBehaviour
                 //EditorApplication.isPaused = true;
                 animator.Play(GetAnimationDirect(animator, 0));
                 animator.AnimationFinished += AnimatorOnAnimationFinished;
-                rb.velocity = Vector2.zero;
-                rb.AddForce(new Vector2(0, upForce));
+                rb.velocity = new Vector2(rb.velocity.x, 0f);
+                rb.AddForce(new Vector2(0f, upForce));
+
+                currentFlaps++;
+            }
+            else if (currentFlaps >= maxFlaps && flapRegenDelayed == false)
+            {
+                flapRegenDelayed = true;
+                flapRegenDelayTimer = 0f;
+            }
+            else if (flapRegenDelayed && currentFlaps < maxFlaps)
+            {
+                flapRegenDelayed = false;
             }
 
-            flapCooldownTimer += Time.deltaTime;
+            horizontal = Input.GetAxisRaw("Horizontal");
+
+            
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if (isDead == false)
+        {
+
+
+            //rb.AddForce(new Vector2(horizontal * horizontalSpeed, 0f), ForceMode2D.Force);
+            rb.velocity = new Vector2(horizontal * horizontalSpeed, rb.velocity.y);
+
+            flapCooldownTimer += Time.fixedDeltaTime;
+            flapRegenTimer += Time.fixedDeltaTime;
+            flapRegenDelayTimer += Time.fixedDeltaTime;
+
+            if (flapRegenTimer > flapRegen && flapRegenDelayTimer > flapRegenDelay)
+            {
+                currentFlaps = Mathf.Max(currentFlaps - 1, 0);
+                flapRegenTimer = 0f;
+            }
         }
     }
 
@@ -69,7 +130,7 @@ public class FlappyDragonController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         rb.velocity = Vector2.zero;
-        isDead = true;
+        //isDead = true;
     }
 
     private void SwitchAnimation(int offset)
