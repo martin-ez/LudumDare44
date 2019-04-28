@@ -129,7 +129,7 @@ public class FlappyDragonController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        rb.velocity = Vector2.zero;
+        //rb.velocity = Vector2.zero;
         //isDead = true;
     }
 
