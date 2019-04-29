@@ -5,11 +5,10 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     public GameObject[] sprites;
+    public Transform environment;
     public int noInstances;
     public float minParallax = 0;
     public float maxParallax = 0;
-    public float minScale = 1;
-    public float maxScale = 1;
 
     private Transform cam;
     private GameObject[] instances;
@@ -34,7 +33,6 @@ public class Spawner : MonoBehaviour
                 newSpawn.transform.SetParent(cam);
                 newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), 0, 0);
                 if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
-                newSpawn.transform.GetChild(0).localScale = Vector3.one * Random.Range(1f, maxScale);
                 instances[i] = newSpawn;
             }
         }
@@ -46,10 +44,9 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < instances.Length; i++)
         {
             GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
-            newSpawn.transform.SetParent(cam);
+            newSpawn.transform.SetParent(environment);
             newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge, screenEdge * 2), 0, 0);
             if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
-            newSpawn.transform.GetChild(0).localScale = Vector3.one * Random.Range(1f, maxScale);
             instances[i] = newSpawn;
         }
     }
