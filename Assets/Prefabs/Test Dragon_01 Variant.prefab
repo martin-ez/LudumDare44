@@ -90,7 +90,7 @@ PrefabInstance:
     - target: {fileID: 8954365655530917408, guid: 3b31f1bc03e5e5949a8c7ae6fb0c131a,
         type: 3}
       propertyPath: m_Name
-      value: Dragon_01 Variant
+      value: Test Dragon_01 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8954365655530917408, guid: 3b31f1bc03e5e5949a8c7ae6fb0c131a,
         type: 3}

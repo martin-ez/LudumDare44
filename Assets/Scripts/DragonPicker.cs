@@ -36,6 +36,9 @@ public class DragonPicker : MonoBehaviour
         string name = dragonName.text;
 
         // Save data to manager
+
+        GameManager.gameManager.SetDragon((DragonType)type, (DragonColor)color);
+
         // Start level
     }
 }
