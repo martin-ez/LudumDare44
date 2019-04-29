@@ -127,6 +127,7 @@ public class FlappyDragonController : MonoBehaviour
                 flapRegenTimer = 0f;
             }
         }
+        rb.velocity = Vector2.ClampMagnitude(rb.velocity, MaxSpeed);
     }
 
     private void AnimatorOnAnimationFinished(string obj)

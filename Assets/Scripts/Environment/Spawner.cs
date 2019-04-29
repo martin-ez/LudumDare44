@@ -12,23 +12,30 @@ public class Spawner : MonoBehaviour
     public bool randomFlip = false;
     public float yJitter = 0f;
 
-    private Transform cam;
+    private Camera cam;
     private GameObject[] instances;
     private float tolerance = 5;
     private float screenEdge;
 
     void Start()
     {
-        cam = Camera.main.transform;
+        cam = Camera.main;
         screenEdge = Mathf.Abs(transform.localPosition.x);
         InitSpawn();
     }
-
+    /*
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = new Color(0, 1, 0, 0.5f);
+        Gizmos.DrawCube(new Vector2((cam.transform.position.x - cam.orthographicSize * 0.5f) - tolerance, 0f), new Vector2(.1f, .1f));
+    }
+    */
     private void Update()
     {
         for (int i = 0; i < instances.Length; i++)
         {
-            if (instances[i].transform.position.x < transform.position.x - tolerance)
+            Debug.Log(instances[i].transform.position.x);
+            if (instances[i].transform.position.x < (cam.transform.position.x - cam.orthographicSize * Screen.width / Screen.height) - tolerance)
             {
                 Destroy(instances[i]);
                 GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);

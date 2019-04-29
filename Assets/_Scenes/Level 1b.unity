@@ -596,6 +596,10 @@ PrefabInstance:
       propertyPath: maxFlaps
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1481252428, guid: 02a8ce253a599844eb2a0e290e2279e0, type: 3}
+      propertyPath: MaxSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 34153955430596432, guid: 02a8ce253a599844eb2a0e290e2279e0,
         type: 3}
       propertyPath: m_SortingLayerID
