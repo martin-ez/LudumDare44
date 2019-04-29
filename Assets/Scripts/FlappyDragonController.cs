@@ -106,10 +106,16 @@ public class FlappyDragonController : MonoBehaviour
     {
         if (isDead == false)
         {
-
-
-            //rb.AddForce(new Vector2(horizontal * horizontalSpeed, 0f), ForceMode2D.Force);
-            rb.velocity = new Vector2(horizontal * horizontalSpeed, rb.velocity.y);
+            if (horizontal == 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x * 0.5f, rb.velocity.y);
+            }
+            else
+            {
+                rb.AddForce(new Vector2(horizontal * horizontalSpeed, 0f), ForceMode2D.Force);
+            }
+            
+            //rb.velocity = new Vector2(horizontal * horizontalSpeed, rb.velocity.y);
 
             flapCooldownTimer += Time.fixedDeltaTime;
             flapRegenTimer += Time.fixedDeltaTime;
