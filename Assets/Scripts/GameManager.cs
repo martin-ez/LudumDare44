@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     // Update is called once per frame
@@ -80,24 +82,24 @@ public class GameManager : MonoBehaviour
 
 public enum DragonIndex
 {
-    Type1AdolescentGreen,
-    Type1AdolescentPurple,
-    Type1AdolescentRed,
-    Type1BabyGreen,
-    Type1BabyPurple,
-    Type1BabyRed,
-    Type2AdolescentGreen,
-    Type2AdolescentPurple,
-    Type2AdolescentRed,
-    Type2BabyGreen,
-    Type2BabyPurple,
-    Type2BabyRed
+    Type1AdolescentGreen = 0,
+    Type1AdolescentPurple = 1,
+    Type1AdolescentRed = 2,
+    Type1BabyGreen = 3,
+    Type1BabyPurple = 4,
+    Type1BabyRed = 5,
+    Type2AdolescentGreen = 6,
+    Type2AdolescentPurple = 7,
+    Type2AdolescentRed = 8,
+    Type2BabyGreen = 9,
+    Type2BabyPurple = 10,
+    Type2BabyRed = 11
 }
 
 public enum DragonType
 {
-    Type1,
-    Type2
+    Type1 = 0,
+    Type2 = 1
 }
 
 public enum DragonColor

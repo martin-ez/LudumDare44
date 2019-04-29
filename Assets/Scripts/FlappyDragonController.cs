@@ -151,12 +151,15 @@ public class FlappyDragonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (!firstUpdateDone)
         {
             PlayIdle((int)GameManager.gameManager.dragonBabyIndex > 5 ? 2 : 1);
             Debug.Log((int)GameManager.gameManager.dragonBabyIndex > 5 ? 2 : 1);
             firstUpdateDone = true;
         }
+
+        //if (GetComponent<Health>().)
 
         if (isDead == false)
         {

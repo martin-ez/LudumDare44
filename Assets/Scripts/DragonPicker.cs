@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DragonPicker : MonoBehaviour
 {
@@ -37,8 +38,10 @@ public class DragonPicker : MonoBehaviour
 
         // Save data to manager
 
-        GameManager.gameManager.SetDragon((DragonType)type, (DragonColor)color);
+        GameManager.gameManager.SetDragon((DragonType)type, (DragonColor)(--color < 0 ? 2 : color));
 
         // Start level
+
+        SceneManager.LoadScene(2);
     }
 }
