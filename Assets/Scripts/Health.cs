@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
     [SerializeField]
     private int health = 1;
+    private int maxHealth = 10;
     public bool canBeDamaged = true;
     private int lastDamageTaken;
 
@@ -13,7 +15,15 @@ public class Health : MonoBehaviour
     public int physicalIgnore;
     public float fireResistance = 1.0f;
     public int fireIgnore;
-    
+
+    public Transform respawnPoint;
+
+    public Image bar;
+
+    public void Start()
+    {
+        maxHealth = health;
+    }
 
     public int Damage(int damage, DamageType[] damageTypes)
     {
@@ -39,12 +49,23 @@ public class Health : MonoBehaviour
 
         health -= damage;
         lastDamageTaken = damage;
+        Debug.Log(bar.fillAmount = (float)health / (float)maxHealth);
         if (health <= 0)
         {
             Die();
         }
+        else
+        {
+            Respawn();
+        }
 
         return lastDamageTaken;
+    }
+
+    public void Respawn()
+    {
+        transform.position = respawnPoint.position;
+        transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
     
     public bool Die()
