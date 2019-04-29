@@ -9,6 +9,8 @@ public class Spawner : MonoBehaviour
     public int noInstances;
     public float minParallax = 0;
     public float maxParallax = 0;
+    public bool randomFlip = false;
+    public float yJitter = 0f;
 
     private Transform cam;
     private GameObject[] instances;
@@ -30,9 +32,10 @@ public class Spawner : MonoBehaviour
             {
                 Destroy(instances[i]);
                 GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
-                newSpawn.transform.SetParent(cam);
-                newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), 0, 0);
+                newSpawn.transform.SetParent(environment);
+                newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), Random.Range(0, yJitter), 0);
                 if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
+                if (randomFlip) newSpawn.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = (Random.value < 0.5);
                 instances[i] = newSpawn;
             }
         }
@@ -45,7 +48,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
             newSpawn.transform.SetParent(environment);
-            newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge, screenEdge * 2), 0, 0);
+            newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge, screenEdge * 4), Random.Range(0, yJitter), 0);
             if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
             instances[i] = newSpawn;
         }
