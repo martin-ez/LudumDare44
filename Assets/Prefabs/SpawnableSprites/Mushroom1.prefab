@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5010829225683885275}
   - component: {fileID: 1722590164986840300}
-  m_Layer: 0
+  - component: {fileID: 2311448755429576105}
+  m_Layer: 20
   m_Name: Mushroom1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +47,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parallaxEffect: 0
   tiling: 0
+--- !u!61 &2311448755429576105
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1553209864493207601}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 7858ae1c45c63e34b80bb48d072efeee, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0029050112, y: -7.657317}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 3.03, y: 2.48}
+    newSize: {x: 3.03, y: 2.48}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.3072746, y: 2.1387806}
+  m_EdgeRadius: 0
 --- !u!1 &4504396370726685403
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,7 +83,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5869280960440336222}
   - component: {fileID: 7353681068549907504}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
