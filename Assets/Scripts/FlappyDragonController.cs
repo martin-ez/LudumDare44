@@ -50,6 +50,7 @@ public class FlappyDragonController : MonoBehaviour
     void Start()
     {
         animator = gameObject.GetComponent<SpriterDotNetBehaviour>().Animator;
+        Debug.Log(gameObject.GetComponent<SpriterDotNetBehaviour>().ToString());
         rb = GetComponent<Rigidbody2D>();
         animator.Play(GetAnimationDirect(animator, 1));
         animator.Speed = AnimatorSpeed;
