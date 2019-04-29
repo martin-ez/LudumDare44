@@ -20,7 +20,7 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-        screenEdge = Mathf.Abs(transform.localPosition.x);
+        screenEdge = Mathf.Abs(cam.transform.position.x);
         InitSpawn();
     }
     /*
@@ -32,6 +32,7 @@ public class Spawner : MonoBehaviour
     */
     private void Update()
     {
+        screenEdge = Mathf.Abs(cam.transform.position.x + cam.orthographicSize * Screen.width / Screen.height);
         for (int i = 0; i < instances.Length; i++)
         {
             Debug.Log(instances[i].transform.position.x);
