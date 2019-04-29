@@ -11,14 +11,14 @@ public class Spawner : MonoBehaviour
     public float minScale = 1;
     public float maxScale = 1;
 
-    private Transform cam;
+    private Transform environmentContainer;
     private GameObject[] instances;
     private float tolerance = 5;
     private float screenEdge;
 
     void Start()
     {
-        cam = Camera.main.transform;
+        environmentContainer = GameObject.FindGameObjectWithTag("ParallaxEnvironment").transform;
         screenEdge = Mathf.Abs(transform.localPosition.x);
         InitSpawn();
     }
@@ -31,7 +31,7 @@ public class Spawner : MonoBehaviour
             {
                 Destroy(instances[i]);
                 GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
-                newSpawn.transform.SetParent(cam);
+                newSpawn.transform.SetParent(environmentContainer);
                 newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), 0, 0);
                 if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
                 newSpawn.transform.GetChild(0).localScale = Vector3.one * Random.Range(1f, maxScale);
@@ -46,7 +46,7 @@ public class Spawner : MonoBehaviour
         for (int i = 0; i < instances.Length; i++)
         {
             GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
-            newSpawn.transform.SetParent(cam);
+            newSpawn.transform.SetParent(environmentContainer);
             newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge, screenEdge * 2), 0, 0);
             if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
             newSpawn.transform.GetChild(0).localScale = Vector3.one * Random.Range(1f, maxScale);
