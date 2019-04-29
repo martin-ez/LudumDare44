@@ -14,7 +14,7 @@ public class Spawner : MonoBehaviour
 
     private Camera cam;
     private GameObject[] instances;
-    private float tolerance = 5;
+    private readonly float tolerance = 5;
     private float screenEdge;
 
     void Start()
@@ -35,13 +35,13 @@ public class Spawner : MonoBehaviour
         screenEdge = Mathf.Abs(cam.transform.position.x + cam.orthographicSize * Screen.width / Screen.height);
         for (int i = 0; i < instances.Length; i++)
         {
-            Debug.Log(instances[i].transform.position.x);
+            // Debug.Log(instances[i].transform.position.x);
             if (instances[i].transform.position.x < (cam.transform.position.x - cam.orthographicSize * Screen.width / Screen.height) - tolerance)
             {
                 Destroy(instances[i]);
                 GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
                 newSpawn.transform.SetParent(environment);
-                newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), Random.Range(0, yJitter), 0);
+                newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), Random.Range(0, yJitter), 12);
                 if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
                 if (randomFlip) newSpawn.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = (Random.value < 0.5);
                 instances[i] = newSpawn;
@@ -56,7 +56,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
             newSpawn.transform.SetParent(environment);
-            newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge, screenEdge * 4), Random.Range(0, yJitter), 0);
+            newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge, screenEdge * 4), Random.Range(0, yJitter), 12);
             if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
             instances[i] = newSpawn;
         }
