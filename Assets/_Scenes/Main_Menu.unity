@@ -713,7 +713,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1137764322}
   - component: {fileID: 1137764321}
-  - component: {fileID: 1137764320}
   - component: {fileID: 1137764323}
   m_Layer: 0
   m_Name: Main Camera
@@ -722,14 +721,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1137764320
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1137764319}
-  m_Enabled: 1
 --- !u!20 &1137764321
 Camera:
   m_ObjectHideFlags: 0
@@ -948,8 +939,8 @@ MonoBehaviour:
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 0.7
-  m_Text: Methods to Prepare Thine Dragon
+    m_LineSpacing: 0.8
+  m_Text: Methods for Instructing Thine Dragon
 --- !u!222 &1289534396
 CanvasRenderer:
   m_ObjectHideFlags: 0

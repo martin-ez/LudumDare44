@@ -16,6 +16,7 @@ public class FlappyDragonController : MonoBehaviour
     //private Animator anim;
     private SpriterDotNetBehaviour animator;
     private Rigidbody2D rb;
+    private AudioManager audio;
 
     public float transitionTime = 1f;
 
@@ -95,7 +96,7 @@ public class FlappyDragonController : MonoBehaviour
         flapCooldownTimer = flapCooldown;
 
         col = GetComponent<BoxCollider2D>();
-
+        audio = FindObjectOfType<AudioManager>();
         flapPrefabCount = currentFlaps;
     }
 
@@ -184,6 +185,7 @@ public class FlappyDragonController : MonoBehaviour
                 rb.AddForce(new Vector2(0f, upForce));
 
                 currentFlaps++;
+                audio.PlayDragonSound(AudioManager.DragonSound.Flap);
             }
             else if (currentFlaps >= maxFlaps && flapRegenDelayed == false)
             {

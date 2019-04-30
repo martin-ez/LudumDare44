@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6682307631442751976}
   - component: {fileID: 6682307631442751979}
+  - component: {fileID: 1587157683}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -43,19 +44,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b076af37bee3f846993e8418d59cca2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SfxVolume: 0.8
-  MusicVolume: 0.5
+  SfxVolume: 1
+  MusicVolume: 0.35
+  VoiceVolume: 1
   gain: {fileID: 8300000, guid: 1b49b556d45136f4d807263fb875a4b8, type: 3}
   lost: {fileID: 8300000, guid: 45a857ef83c0e164b961441a03304a1d, type: 3}
   bounce: {fileID: 8300000, guid: fb5eb74313abedb43935a23757eaa279, type: 3}
   fireshot: {fileID: 8300000, guid: 0efc305427a32bf4599e3aa887de259b, type: 3}
-  growl:
-  - {fileID: 8300000, guid: d93ced307d74b354fbe5ea6683e7206f, type: 3}
-  - {fileID: 8300000, guid: 8acc48ff4037d404d8524c765d3d6134, type: 3}
-  - {fileID: 8300000, guid: c1d8bf3733511ee489811cd2e14d7575, type: 3}
-  flap:
-  - {fileID: 8300000, guid: f8b52e2509d382147a903490dddff416, type: 3}
-  - {fileID: 8300000, guid: 157619dd58ba9794fa6960fdb937b677, type: 3}
-  - {fileID: 8300000, guid: 369e207db14807247999ac553b23c432, type: 3}
-  song1: {fileID: 0}
-  song2: {fileID: 0}
+  growl: {fileID: 8300000, guid: c1d8bf3733511ee489811cd2e14d7575, type: 3}
+  flap: {fileID: 8300000, guid: 369e207db14807247999ac553b23c432, type: 3}
+  song1: {fileID: 8300000, guid: b22804d11904d074290ac8453cd1065d, type: 3}
+  song2: {fileID: 8300000, guid: 1080014feae5fbe498eb8c70bbbf9f3d, type: 3}
+  voiceOver:
+  - {fileID: 8300000, guid: 2a89a11e8447433459c5b901723895f4, type: 3}
+  - {fileID: 8300000, guid: 527d24032e69e54438d4e8d9997dcfc6, type: 3}
+--- !u!81 &1587157683
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6682307631442751978}
+  m_Enabled: 1
