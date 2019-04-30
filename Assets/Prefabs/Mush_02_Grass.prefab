@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1970608110868980100}
   - component: {fileID: 1970608110868980103}
   - component: {fileID: 1970608110868980102}
+  - component: {fileID: -6892904439101697772}
   m_Layer: 0
   m_Name: Mush_02_Grass
   m_TagString: Untagged
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_Size: {x: 3.07, y: 2.26}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!61 &1970608110868980102
@@ -106,3 +107,15 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.255617, y: 1.7588234}
   m_EdgeRadius: 0
+--- !u!114 &-6892904439101697772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1970608110868980105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77808d5b03577a94b814b47bbdd608cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

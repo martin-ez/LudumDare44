@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
     public Transform respawnPoint;
 
     public Image bar;
-
+    public Image winPanel;
 
 
     public void Start()
@@ -63,7 +63,7 @@ public class Health : MonoBehaviour
         else if (health ==  maxHealth)
         {
             // win!
-
+            StartCoroutine(WinAnimation());
         }
 
         return lastDamageTaken;
@@ -80,5 +80,20 @@ public class Health : MonoBehaviour
         gameObject.SetActive(false);
         SceneManager.LoadScene(0);
         return false;
+    }
+
+    IEnumerator WinAnimation()
+    {
+        float time = 0;
+        float i = 0;
+        while (i < 1f)
+        {
+            time += Time.deltaTime;
+            i = time / 1.2f;
+
+            winPanel.rectTransform.position = Vector3.up * Mathf.Lerp(1000, 0, i);
+            yield return null;
+        }
+        winPanel.rectTransform.position = Vector3.zero;
     }
 }
