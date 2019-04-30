@@ -2796,6 +2796,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4924662599845548162, guid: cd402af73880edb4680d4be02cf25250,
+        type: 3}
+      propertyPath: isMushroomSpawner
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd402af73880edb4680d4be02cf25250, type: 3}
 --- !u!1001 &6692670546835378613
