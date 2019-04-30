@@ -52,6 +52,10 @@ public class FlappyDragonController : MonoBehaviour
 
     private bool isbaby = true;
 
+    public GameObject flapPrefab;
+    public GameObject flapParent;
+    public int flapPrefabCount;
+
     public void SwitchToAdolescent()
     {
         isbaby = false;
@@ -91,6 +95,8 @@ public class FlappyDragonController : MonoBehaviour
         flapCooldownTimer = flapCooldown;
 
         col = GetComponent<BoxCollider2D>();
+
+        flapPrefabCount = currentFlaps;
     }
 
     public IEnumerator AnimationActivation() // IGNORE
@@ -193,11 +199,23 @@ public class FlappyDragonController : MonoBehaviour
 
             
         }
-
+        /*
         if (Input.GetButtonUp("Fire2"))
         {
             if (isbaby) SwitchToAdolescent();
             else SwitchToBaby();
+        }*/
+        UpdateFlapsUI();
+    }
+
+    public void UpdateFlapsUI()
+    {
+        for (int i = 0; i < flapParent.transform.childCount; i++)
+        {
+            GameObject child = flapParent.transform.GetChild(i).gameObject;
+            Debug.Log(child);
+            child.SetActive((i) < maxFlaps - currentFlaps);
+            Debug.Log((i + 1) < currentFlaps);
         }
     }
 
