@@ -63,6 +63,7 @@ public class Health : MonoBehaviour
         else if (health ==  maxHealth)
         {
             // win!
+            SceneManager.LoadScene(0);
             StartCoroutine(WinAnimation());
         }
 
@@ -74,7 +75,7 @@ public class Health : MonoBehaviour
         transform.position = respawnPoint.position;
         transform.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
-    
+
     public bool Die()
     {
         gameObject.SetActive(false);
@@ -88,12 +89,13 @@ public class Health : MonoBehaviour
         float i = 0;
         while (i < 1f)
         {
+            Debug.Log("1");
             time += Time.deltaTime;
-            i = time / 1.2f;
+            i = time / 1.0f;
 
-            winPanel.rectTransform.position = Vector3.up * Mathf.Lerp(100, 0, i);
+            winPanel.rectTransform.localPosition = Vector3.up * Mathf.Lerp(1000, 0, i);
             yield return null;
         }
-        winPanel.rectTransform.position = Vector3.zero;
+        winPanel.rectTransform.localPosition = Vector3.zero;
     }
 }

@@ -927,7 +927,7 @@ MonoBehaviour:
   fireIgnore: 0
   respawnPoint: {fileID: 1570510077}
   bar: {fileID: 654308148}
-  winPanel: {fileID: 0}
+  winPanel: {fileID: 1915579290}
 --- !u!1 &825194403
 GameObject:
   m_ObjectHideFlags: 0
