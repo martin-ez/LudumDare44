@@ -18,7 +18,7 @@ public class Spawner : MonoBehaviour
     private float screenEdge;
 
     public bool isMushroomSpawner;
-    private float spacer = 2f;
+    private float spacer = .1f;
     private float spacerMult = 1.2f;
     private float spacerTimer;
 
@@ -87,7 +87,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
             newSpawn.transform.SetParent(environment);
-            newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge, screenEdge * 4), Random.Range(0, yJitter), 12);
+            newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge * 2, 0), Random.Range(0, yJitter), 12);
             if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
             instances[i] = newSpawn;
         }
