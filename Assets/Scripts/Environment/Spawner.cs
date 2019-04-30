@@ -17,6 +17,11 @@ public class Spawner : MonoBehaviour
     private readonly float tolerance = 5;
     private float screenEdge;
 
+    public bool isMushroomSpawner;
+    private float spacer = .1f;
+    private float spacerMult = 1.2f;
+    private float spacerTimer;
+
     void Start()
     {
         cam = Camera.main;
@@ -33,20 +38,46 @@ public class Spawner : MonoBehaviour
     private void Update()
     {
         screenEdge = Mathf.Abs(cam.transform.position.x + cam.orthographicSize * Screen.width / Screen.height);
-        for (int i = 0; i < instances.Length; i++)
+        if (!isMushroomSpawner)
         {
-            // Debug.Log(instances[i].transform.position.x);
-            if (instances[i].transform.position.x < (cam.transform.position.x - cam.orthographicSize * Screen.width / Screen.height) - tolerance)
+            for (int i = 0; i < instances.Length; i++)
             {
-                Destroy(instances[i]);
-                GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
-                newSpawn.transform.SetParent(environment);
-                newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), Random.Range(0, yJitter), 12);
-                if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
-                if (randomFlip) newSpawn.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = (Random.value < 0.5);
-                instances[i] = newSpawn;
+                // Debug.Log(instances[i].transform.position.x);
+                if (instances[i].transform.position.x < (cam.transform.position.x - cam.orthographicSize * Screen.width / Screen.height) - tolerance)
+                {
+                    Destroy(instances[i]);
+                    GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
+                    newSpawn.transform.SetParent(environment);
+                    newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), Random.Range(0, yJitter), 12);
+                    if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
+                    if (randomFlip) newSpawn.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = (Random.value < 0.5);
+                    instances[i] = newSpawn;
+                }
             }
+        }        
+        else if (isMushroomSpawner)
+        {
+            if (spacerTimer > spacer)
+            {
+                for (int i = 0; i < instances.Length; i++)
+                {
+                    if (instances[i].transform.position.x < (cam.transform.position.x - cam.orthographicSize * Screen.width / Screen.height) - tolerance)
+                    {
+                        Destroy(instances[i]);
+                        GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
+                        newSpawn.transform.SetParent(environment);
+                        newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), Random.Range(0, yJitter), 12);
+                        if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
+                        if (randomFlip) newSpawn.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = (Random.value < 0.5);
+                        instances[i] = newSpawn;
+                    }
+                }
+                spacerTimer = 0f;
+                spacer *= spacerMult;
+            }
+            
         }
+        spacerTimer += Time.deltaTime;
     }
 
     private void InitSpawn()
@@ -56,7 +87,7 @@ public class Spawner : MonoBehaviour
         {
             GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
             newSpawn.transform.SetParent(environment);
-            newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge, screenEdge * 4), Random.Range(0, yJitter), 12);
+            newSpawn.transform.localPosition = new Vector3(Random.Range(-screenEdge * 2, 0), Random.Range(0, yJitter), 12);
             if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
             instances[i] = newSpawn;
         }
