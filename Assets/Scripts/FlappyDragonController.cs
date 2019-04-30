@@ -6,7 +6,7 @@ using SpriterDotNetUnity;
 using System;
 using SpriterDotNet;
 using System.Text;
-using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class FlappyDragonController : MonoBehaviour
 {
@@ -63,7 +63,7 @@ public class FlappyDragonController : MonoBehaviour
         dragonVisual.SetActive(false);
         Destroy(dragonVisual);
         dragonVisual = Instantiate(GameManager.gameManager.dragonPrefabs[(int)GameManager.gameManager.dragonAdolescentIndex]);
-        dragonVisual.SetParent(transform.gameObject);
+        dragonVisual.transform.SetParent(transform);
         dragonVisual.transform.localPosition = Vector3.zero;
     }
 
@@ -73,7 +73,7 @@ public class FlappyDragonController : MonoBehaviour
         dragonVisual.SetActive(false);
         Destroy(dragonVisual);
         dragonVisual = Instantiate(GameManager.gameManager.dragonPrefabs[(int)GameManager.gameManager.dragonBabyIndex]);
-        dragonVisual.SetParent(transform.gameObject);
+        dragonVisual.transform.SetParent(transform);
         dragonVisual.transform.localPosition = Vector3.zero;
     }
 
@@ -201,12 +201,11 @@ public class FlappyDragonController : MonoBehaviour
 
             
         }
-        /*
-        if (Input.GetButtonUp("Fire2"))
+        
+        if (Input.GetKey(KeyCode.Escape))
         {
-            if (isbaby) SwitchToAdolescent();
-            else SwitchToBaby();
-        }*/
+            SceneManager.LoadScene(0);
+        }
         UpdateFlapsUI();
     }
 

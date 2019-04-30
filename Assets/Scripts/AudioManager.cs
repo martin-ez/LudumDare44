@@ -158,6 +158,7 @@ public class AudioManager : MonoBehaviour
 
     IEnumerator FadeSong()
     {
+        musicSources[1].time = 0f;
         float time = 0;
         float i = 0;
         while (i < 1f)

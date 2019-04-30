@@ -91,7 +91,7 @@ public class Health : MonoBehaviour
             time += Time.deltaTime;
             i = time / 1.2f;
 
-            winPanel.rectTransform.position = Vector3.up * Mathf.Lerp(1000, 0, i);
+            winPanel.rectTransform.position = Vector3.up * Mathf.Lerp(100, 0, i);
             yield return null;
         }
         winPanel.rectTransform.position = Vector3.zero;
