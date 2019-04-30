@@ -7,10 +7,13 @@ public class AudioManager : MonoBehaviour
     public float SfxVolume;
     [Range(0, 1)]
     public float MusicVolume;
+    [Range(0, 1)]
+    public float VoiceVolume;
 
     AudioSource sfx;
     AudioSource dragonSound;
     AudioSource[] musicSources;
+    AudioSource voiceSource;
 
     public enum FXSound
     {
@@ -32,13 +35,16 @@ public class AudioManager : MonoBehaviour
     public AudioClip bounce;
     public AudioClip fireshot;
 
-    public AudioClip[] growl;
-    public AudioClip[] flap;
+    public AudioClip growl;
+    public AudioClip flap;
 
-    [Header("Song Clips")]
+    [Header("Music Clips")]
     public AudioClip song1;
     public AudioClip song2;
     private int current;
+
+    [Header("VoiceOver Clips")]
+    public AudioClip[] voiceOver;
 
     private static bool created = false;
 
@@ -59,6 +65,11 @@ public class AudioManager : MonoBehaviour
             dragonSound = dragon2DS.AddComponent<AudioSource>();
             dragonSound.volume = SfxVolume;
 
+            GameObject voiceGo = new GameObject("VoiceSource");
+            voiceGo.transform.SetParent(transform);
+            voiceSource = voiceGo.AddComponent<AudioSource>();
+            voiceSource.volume = VoiceVolume;
+
             musicSources = new AudioSource[2];
 
             GameObject music1Go = new GameObject("MusicSource1");
@@ -66,12 +77,14 @@ public class AudioManager : MonoBehaviour
             musicSources[0] = music1Go.AddComponent<AudioSource>();
             musicSources[0].clip = song1;
             musicSources[0].volume = 0;
+            musicSources[0].Play();
 
             GameObject music2Go = new GameObject("MusicSource2");
             music2Go.transform.SetParent(transform);
             musicSources[1] = music2Go.AddComponent<AudioSource>();
             musicSources[1].clip = song2;
             musicSources[1].volume = 0;
+            musicSources[1].Play();
 
             current = 0;
             StartCoroutine(FadeIn());
@@ -110,16 +123,16 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayDragonSound(DragonSound clipName, int level)
+    public void PlayDragonSound(DragonSound clipName)
     {
         AudioClip clip = null;
         switch (clipName)
         {
             case DragonSound.Growl:
-                clip = growl[level];
+                clip = growl;
                 break;
             case DragonSound.Flap:
-                clip = flap[level];
+                clip = flap;
                 break;
         }
         if (clip != null)
@@ -131,6 +144,18 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayVoiceLine(int line)
+    {
+        AudioClip clip = voiceOver[line];
+        if (clip != null)
+        {
+            voiceSource.clip = clip;
+            voiceSource.time = 0f;
+            voiceSource.loop = false;
+            voiceSource.Play();
+        }
+    }
+
     IEnumerator FadeSong()
     {
         float time = 0;
@@ -138,7 +163,7 @@ public class AudioManager : MonoBehaviour
         while (i < 1f)
         {
             time += Time.deltaTime;
-            i = time / 1f;
+            i = time / 1.2f;
 
             musicSources[current].volume = Mathf.Lerp(MusicVolume, 0f, i);
             musicSources[Mathf.Abs(current - 1)].volume = Mathf.Lerp(0f, MusicVolume, i);
@@ -156,7 +181,7 @@ public class AudioManager : MonoBehaviour
         while (i < 1f)
         {
             time += Time.deltaTime;
-            i = time / 1f;
+            i = time / 1.2f;
 
             musicSources[current].volume = Mathf.Lerp(0f, MusicVolume, i);
             yield return null;

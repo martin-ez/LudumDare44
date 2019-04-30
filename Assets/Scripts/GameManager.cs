@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public static GameManager gameManager;
 
+    private AudioManager audio;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,12 +26,20 @@ public class GameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(this.gameObject);
+        audio = FindObjectOfType<AudioManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnLevelWasLoaded(int level)
     {
-        
+        if (level == 1)
+        {
+            audio.PlayVoiceLine(0); 
+        }
+        else if (level == 2)
+        {
+            audio.PlayVoiceLine(1);
+            audio.ChangeSong();
+        }
     }
 
     public void SetDragon(DragonType type, DragonColor color)
