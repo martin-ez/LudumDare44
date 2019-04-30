@@ -76,6 +76,7 @@ public class AudioManager : MonoBehaviour
             music1Go.transform.SetParent(transform);
             musicSources[0] = music1Go.AddComponent<AudioSource>();
             musicSources[0].clip = song1;
+            musicSources[0].loop = true;
             musicSources[0].volume = 0;
             musicSources[0].Play();
 
@@ -83,6 +84,7 @@ public class AudioManager : MonoBehaviour
             music2Go.transform.SetParent(transform);
             musicSources[1] = music2Go.AddComponent<AudioSource>();
             musicSources[1].clip = song2;
+            musicSources[1].loop = true;
             musicSources[1].volume = 0;
             musicSources[1].Play();
 
