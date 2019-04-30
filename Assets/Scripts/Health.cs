@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class Health : MonoBehaviour
     public Transform respawnPoint;
 
     public Image bar;
+
+
 
     public void Start()
     {
@@ -71,6 +74,7 @@ public class Health : MonoBehaviour
     public bool Die()
     {
         gameObject.SetActive(false);
+        SceneManager.LoadScene(0);
         return false;
     }
 }
