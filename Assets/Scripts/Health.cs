@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField]
-    private int health = 1;
-    private int maxHealth = 10;
+    public float health = 3;
+    private float maxHealth = 10;
     public bool canBeDamaged = true;
-    private int lastDamageTaken;
+    private float lastDamageTaken;
 
     public float physicalResistance = 1.0f;
     public int physicalIgnore;
@@ -20,12 +20,14 @@ public class Health : MonoBehaviour
 
     public Image bar;
 
+
+
     public void Start()
     {
-        maxHealth = health;
+        bar.fillAmount = (float)health / (float)maxHealth;
     }
 
-    public int Damage(int damage, DamageType[] damageTypes)
+    public float Damage(float damage, DamageType[] damageTypes)
     {
         float bestResistance = 1.0f;
         int bestIgnore = 0;
@@ -44,8 +46,8 @@ public class Health : MonoBehaviour
             }
         }
 
-        damage -= bestIgnore;
-        damage = (int)Mathf.Round(damage * bestResistance);
+        //damage -= bestIgnore;
+        //damage = (int)Mathf.Round(damage * bestResistance);
 
         health -= damage;
         lastDamageTaken = damage;
@@ -54,9 +56,14 @@ public class Health : MonoBehaviour
         {
             Die();
         }
-        else
+        else if (damage > 0)
         {
             Respawn();
+        }
+        else if (health ==  maxHealth)
+        {
+            // win!
+
         }
 
         return lastDamageTaken;
@@ -71,6 +78,7 @@ public class Health : MonoBehaviour
     public bool Die()
     {
         gameObject.SetActive(false);
+        SceneManager.LoadScene(0);
         return false;
     }
 }
