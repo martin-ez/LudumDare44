@@ -19,8 +19,13 @@ public class Spawner : MonoBehaviour
 
     public bool isMushroomSpawner;
     private float spacer = .1f;
-    private float spacerMult = 1.2f;
+    private float spacerMult = 1.05f;
     private float spacerTimer;
+
+    private float spacerMax = 4f;
+
+    private float minMushroomDist = 0.5f;
+    private float lastMushroomX = 0f;
 
     void Start()
     {
@@ -61,19 +66,26 @@ public class Spawner : MonoBehaviour
             {
                 for (int i = 0; i < instances.Length; i++)
                 {
-                    if (instances[i].transform.position.x < (cam.transform.position.x - cam.orthographicSize * Screen.width / Screen.height) - tolerance)
+                    float newDistance = tolerance + screenEdge + Random.Range(0.5f, 1.5f);
+                    if (instances[i].transform.position.x < (cam.transform.position.x - cam.orthographicSize * Screen.width / Screen.height) - tolerance && newDistance - lastMushroomX >= minMushroomDist)
                     {
                         Destroy(instances[i]);
                         GameObject newSpawn = Instantiate(sprites[Random.Range(0, sprites.Length)]);
                         newSpawn.transform.SetParent(environment);
-                        newSpawn.transform.localPosition = new Vector3(tolerance + screenEdge + Random.Range(0, screenEdge), Random.Range(0, yJitter), 12);
+                        newSpawn.transform.localPosition = new Vector3(newDistance, Random.Range(0, yJitter), 12);
                         if (maxParallax > 0) newSpawn.GetComponent<Parallax>().parallaxEffect = Random.Range(minParallax, maxParallax);
                         if (randomFlip) newSpawn.transform.GetChild(0).GetComponent<SpriteRenderer>().flipX = (Random.value < 0.5);
                         instances[i] = newSpawn;
+
+                        lastMushroomX = newSpawn.transform.position.x;
                     }
                 }
+
+
+
                 spacerTimer = 0f;
                 spacer *= spacerMult;
+                spacer = Mathf.Min(spacer, spacerMax);
             }
             
         }

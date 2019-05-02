@@ -7,6 +7,8 @@ public class DamageOnTrigger : MonoBehaviour
     Damager damager;
     private float count = 3;
 
+    private float maxCount = 20f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,5 +44,6 @@ public class DamageOnTrigger : MonoBehaviour
 
         transform.localPosition += Vector3.right * count;
         count *= 1.5f;
+        count = Mathf.Min(count, maxCount);
     }
 }
